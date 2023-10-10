@@ -1,0 +1,1 @@
+### DataFlow is a client-side web framework designed to provide a solid foundation for updating, fetching, and persisting data in your web applications. With DataFlow, you can streamline the data management process, making it easier to build robust and interactive user interfaces.
