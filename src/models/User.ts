@@ -1,8 +1,13 @@
+import axios, {AxiosResponse} from "axios"
 interface userprops{
     name?: string
     age?: number
+    // If a User has an id property it means that it has been saved in our backend server
+    id?: number
 }
 type Callback = () => void
+
+const URL = " http://localhost:3000/users"
 
 class User{
     event:{[ key : string] : Callback[]} = {}
@@ -25,6 +30,22 @@ class User{
             return
         }
         handlers.forEach(callback => callback())
+    }
+    fetch(): void{
+        axios.get(`${URL}/${this.get("id")}`).then((response: AxiosResponse): void => {
+            this.set(response.data)
+        })
+    }
+    save(): void{
+        const id = this.get("id")
+        // If the data exists in our backend server, just update
+        if(id){
+            axios.put(`${URL}/${id}`, this.data)
+        }
+        // else, create a new user in our server
+        else{
+            axios.post(`${URL}`, this.data)
+        }
     }
 }
 
