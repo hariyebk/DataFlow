@@ -5,14 +5,14 @@ interface HasId {
 }
 class Sync<T extends HasId>{
     constructor(public URL: string){}
-    fetch(id: number): AxiosPromise{
+    fetch = (id: number): AxiosPromise =>{
         return axios.get(`${this.URL}/${id}`)
     }
     save(data: T): AxiosPromise{
         const {id} = data
         // If the data exists in our backend server, just update
         if(id){
-            return axios.put(`${URL}/${id}`, data)
+            return axios.put(`${this.URL}/${id}`, data)
         }
         // else, create a new user in our server
         else{
