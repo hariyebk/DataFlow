@@ -1,5 +1,12 @@
-import User from "./models/User"
+
+import User from "./models/User";
 
 
-const user = User.Initializer({id: 1, name: "hari", age: 25})
-console.log(user.get("age"))
+const collection = User.UserCollection()
+
+collection.on("change", () => {
+    console.log(collection.model)
+})
+
+
+collection.fetch()

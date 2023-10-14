@@ -1,16 +1,16 @@
 import Events from "./Events"
 import Sync from "./Sync"
 import Attributes from "./Attributes"
-import { AxiosResponse } from "axios"
+import Collection from "./Collection"
 import { Model } from "./Model"
-export interface userprops{
+interface userprops{
     name?: string
     age?: number
     // If a User has an id property it means that it has been saved in our backend server
     id?: number
 }
 
-const URL = " http://localhost:3000/users"
+export const URL = " http://localhost:3000/users"
 
 class User extends Model<userprops>{
     static Initializer(attrs: userprops): User{
@@ -19,6 +19,10 @@ class User extends Model<userprops>{
             new Sync(URL),
             new Events()
         )
+    }
+
+    static UserCollection(): Collection< User, userprops> {
+        return new Collection<User, userprops>(URL, (json: userprops): User => User.Initializer(json))
     }
 }
 
