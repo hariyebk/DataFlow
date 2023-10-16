@@ -14,7 +14,7 @@ interface ModelApi<T>{
     save(data: T): AxiosPromise
 }
 
-interface HasId{
+export interface HasId{
     id?: number
 }
 
