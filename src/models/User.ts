@@ -20,9 +20,14 @@ class User extends Model<userprops>{
             new Events()
         )
     }
-
+    
     static UserCollection(): Collection< User, userprops> {
         return new Collection<User, userprops>(URL, (json: userprops): User => User.Initializer(json))
+    }
+
+    SetRandomAge(): void{
+        const age = Math.round(Math.random() * 100)
+        this.set({ age })
     }
 }
 

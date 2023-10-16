@@ -1,22 +1,26 @@
+import User from "../models/User"
 class UserForm{
-    constructor(public parent: Element){}
+    constructor(public parent: Element, public model: User){
+        this.OnChange()
+    }
     eventMap(): {[key: string]: () => void}{
         return {
-            "click:button": this.onClickButton,
-            "mouseenter:h1": this.onHover
+            "click:.set-age": this.onSetAge
         }
     }
-    onClickButton(): void{
-        console.log("you clicked me")
+    OnChange(): void{
+        this.model.on("change", () => {
+            this.render()
+        })
     }
-    onHover(): void{
-        console.log("hovered over")
+    onSetAge = (): void => {
+        this.model.SetRandomAge()
     }
     bindEvents(fragment: DocumentFragment): void{
         const events = this.eventMap()
         for(let eventkeys in events){
-            const [eventName, selector] = eventkeys.split(":")
-            fragment.querySelectorAll(selector).forEach((element: Element): void => {
+            const [eventName, className] = eventkeys.split(":")
+            fragment.querySelectorAll(className).forEach((element: Element): void => {
                 element.addEventListener(eventName, events[eventkeys])
             })
         }
@@ -25,12 +29,20 @@ class UserForm{
         return `
         <div>
             <h1> User Form </h1>
+            <div>
+                <h4> User Name:  ${this.model.get("name")} </h4>
+                <h4> User Age:   ${this.model.get("age")}  </h4>
+            <div>
             <input />
             <button> click me </button>
+            <button class = "set-age"> set Random Age </button>
         </div>
         `
     }
     render():void{
+        // remove everthing in The parent element before rendering a template
+        this.parent.innerHTML = ""
+        // create a tenplate inside the parent element
         const template = document.createElement("template")
         template.innerHTML = this.template()
         this.bindEvents(template.content)
