@@ -29,6 +29,16 @@
       "name": "zuzu",
       "age": 40,
       "id": 6
+    },
+    {
+      "name": "khamzat",
+      "age": 29,
+      "id": 7
+    },
+    {
+      "name": "usman",
+      "age": 64,
+      "id": 9
     }
   ]
 }

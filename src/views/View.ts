@@ -1,9 +1,8 @@
-import { Model, HasId } from "./Model"
+import { Model, HasId } from "../models/Model"
 
 
 abstract class View <T extends Model<K>, K extends HasId>{
-    // returns an object
-    abstract eventMap(): {[key: string]: () => void}
+
     abstract template(): string
 
     constructor(public parent: Element, public model: T){
@@ -24,6 +23,10 @@ abstract class View <T extends Model<K>, K extends HasId>{
                 element.addEventListener(eventName, events[eventkeys])
             })
         }
+    }
+    // default eventMap function: can be overridden by child class.
+    eventMap(): {[key: string]: () => void}{
+        return {}
     }
     // Renders The html in the DOM
     render():void{

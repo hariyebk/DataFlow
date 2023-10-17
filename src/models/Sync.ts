@@ -8,7 +8,8 @@ class Sync<T extends HasId>{
     fetch = (id: number): AxiosPromise =>{
         return axios.get(`${this.URL}/${id}`)
     }
-    save(data: T): AxiosPromise{
+    save = (data: T): AxiosPromise =>{
+        console.log(data)
         const {id} = data
         // If the data exists in our backend server, just update
         if(id){
@@ -16,7 +17,7 @@ class Sync<T extends HasId>{
         }
         // else, create a new user in our server
         else{
-            return axios.post(`${URL}`, data)
+            return axios.post(`${this.URL}`, data)
         }
     }
 }

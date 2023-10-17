@@ -1,11 +1,12 @@
-import User from "../models/User"
-import View from "../models/View"
-class UserForm extends View{
+import User, {userprops} from "../../models/User"
+import View from "../View"
+class UserForm extends View<User, userprops>{
     // An object that consists the event name and their corresponding callback function
     eventMap(): {[key: string]: () => void}{
         return {
             "click:.set-age": this.onSetAge,
-            "click:.set-name": this.onSetName
+            "click:.set-name": this.onSetName,
+            "click:.save-user": this.onSave,
         }
     }
     // Sets the name in the Input field and triggers a change event
@@ -13,6 +14,10 @@ class UserForm extends View{
         const input = this.parent.querySelector("input")
         const name = input?.value
         this.model.set({name})
+    }
+    // persists the current data on the server
+    onSave = (): void => {
+        this.model.save()
     }
     // Sets a Random Age and triggers a change event
     onSetAge = (): void => {
@@ -23,13 +28,10 @@ class UserForm extends View{
         return `
         <div>
             <h1> User Form </h1>
-            <div>
-                <h4> User Name:  ${this.model.get("name")} </h4>
-                <h4> User Age:   ${this.model.get("age")}  </h4>
-            <div>
-            <input />
+            <input placeholder = "${this.model.get("name")}"/>
             <button class = "set-name"> change Name </button>
             <button class = "set-age"> set Random Age </button>
+            <button class = "save-user"> Save </button>
         </div>
         `
     }
