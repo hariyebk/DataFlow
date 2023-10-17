@@ -40,7 +40,7 @@ abstract class View <T extends Model<K>, K extends HasId>{
     onRender(): void{
     
     }
-
+    // Updates the region object.
     mapRegions(fragment: DocumentFragment): void{
         const regionsMap = this.regionsMap()
         for(let key in regionsMap){
@@ -49,7 +49,6 @@ abstract class View <T extends Model<K>, K extends HasId>{
             if(element){
                 this.regions[key] = element
             }
-
         }
     }
     // Renders The html in the DOM
@@ -60,6 +59,7 @@ abstract class View <T extends Model<K>, K extends HasId>{
         const template = document.createElement("template")
         template.innerHTML = this.template()
         this.bindEvents(template.content)
+        // Finds the parent element from the provided template for each nested view
         this.mapRegions(template.content)
         // Nesting views
         this.onRender()

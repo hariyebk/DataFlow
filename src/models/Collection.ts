@@ -11,11 +11,12 @@ class Collection<T, K>{
         return this.events.on
     }
     get trigger(){
+        console.log(this.model[0])
         return this.events.trigger
     }
 
-    fetch(): void{
-        axios.get(this.URL).then((response: AxiosResponse) => {
+    async fetch(): Promise<void> {
+        await axios.get(this.URL).then((response: AxiosResponse) => {
             response.data.forEach((value: K) => {
                 this.model.push(this.deserialize(value))
             })

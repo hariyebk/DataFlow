@@ -13,6 +13,7 @@ export interface userprops{
 export const URL = " http://localhost:3000/users"
 
 class User extends Model<userprops>{
+    //  Instatiates a new user
     static Initializer(attrs: userprops): User{
         return new User(
             new Attributes<userprops>(attrs),

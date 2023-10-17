@@ -10,6 +10,7 @@ class UserEdit extends View<User, userprops>{
             userForm: ".user-form"
         }
     }
+    // Inserts views on their respective parent element
     onRender(): void {
         new UserForm(this.regions.userForm, this.model).render()
         new UserShow(this.regions.userShow, this.model).render()

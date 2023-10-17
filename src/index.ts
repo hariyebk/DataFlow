@@ -1,13 +1,15 @@
-import UserEdit from "./views/user/UserEdit";
-import User from "./models/User";
+import Collection from "./models/Collection";
+import User, { URL, userprops} from "./models/User";
+import UserList from "./views/user/UserList";
 
-const user = User.Initializer({name: "khamzat", age: 29})
-const parentElement = document.getElementById("root")
-if(parentElement){
-    const userEdit = new UserEdit(parentElement, user)
-    userEdit.render()
-    console.log(userEdit)
-}
-else{
-    throw new Error("Root element not found.")
-}
+// creating a collection of user models by for each user fetched from the server
+const user = new Collection<User, userprops>(URL, (json: userprops) => User.Initializer(json))
+
+// when the fetch operation finishes it emmits a change event
+user.on("change", (): void => {
+    const root = document.getElementById("root")
+    if(root){
+        new UserList(root, user).render()
+    }
+})
+user.fetch()
